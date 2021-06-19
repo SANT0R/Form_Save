@@ -1,162 +1,166 @@
 <!DOCTYPE html>
-<html lang="tr-TR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hoşgeldiniz!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 <style>
-    #menu ul{
-      
-      float: left;
-    }
+* {
+  box-sizing: border-box;
+}
 
-     #menu li{
-       list-style-type:unset;
-      
-     }
-     
-     #menu a{ 
-       text-decoration: none;
-       color: whitesmoke;
-	   font-weight: 600;
-       display: block;
-       text-align: center;
-       transition: 1s;     
-	   font-family: calibri,arial,verdana;
-	   font-size: 20px;
-	   line-height: 50px;
-	   background-color: #887555;
-	   width: 180px;
-	   border-bottom: 3px solid orange;
- 
-		   
-	}
-     
-      #menu span{
-       display: block;
-       margin-top:-60px;
-     }
-     
-     #menu a:hover{
-      
-		background-color: #5F3B06; 
-       	color: #887555;       
-       
-     }     
-      
-    body{
-      margin-top: 90px;
-    }
-  
-    #menu1 li{
-      
-      list-style-type: none;
-      
-      
-      
-    }
-    
-    #menu1 a{
-        
-      text-decoration: none;
-      color: whitesmoke;
-      font-weight: 600;
-      display: block;
-      text-align: center;
-      transition: 1s;     
-      font-family: calibri,arial,verdana;
-      font-size: 20px;
-      line-height: 50px;
-      background-color: #005555;
-      width: 180px;
-      margin-right: 1px; 
-      float: left;
-          
-   }
-    
-     #menu1 span{
-      display: block;
-      margin-top:-60px;
-    }
-    
-    #menu1 a:hover{
-     
-       background-color: #5FD367; 
-          color: #005555;       
-      
-    }
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
 
-    form {
-      padding-left:  250px;
-      border-top-style:ridge;
-      border-bottom-style:ridge;
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
 
-    }     
-     </style>
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
 </head>
-
 <body>
-    <div id="menu1">
-<center>
-<hr>
 
-        
-    </div>
-
-    <hr>
-    <div id="menu" >
-            <ul>
-                <li><a href="/">ANASAYFA</a></li>
-            </ul>
-    </div>
-
-    <div class="container"  >
-      <h3>Form Ekle</h3>
-    </div>
-    <hr>
-
-    <form id="menu1" action="/addform/" method="POST">
+<form action="/search/" method="POST">
+  {% csrf_token %}<div id="menu" >
+  <div>  
+    {% load i18n %}
+    <button class="btn btn-primary" type="submit">{% trans 'RAPOR' %}</button>
+  </div>
+</form>
+  
+<div class="container">
+  <form action="/" method="POST">
       {% csrf_token %}
-      <div class="form-row">
-        <div class="col-md-6 mb-3">
-          <label for="validationServer01">Başlık</label>
-          <input type="text"   name="title" id="title" >
-         
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="validationServer02">Açıklama</label>
-          <input type="text"  name="explonation" id="explonation" >
-          
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="validationServer03"></label>Link</label>
-          <input type="text"   name="link" id="link" >
-          
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="validationServer04">Email</label>
-          <input type="text"  name="email" id="email" >
-         
-        </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="baslik">{% trans 'Başlık' %}</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="title" name="title" placeholder="Başlık" required>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="link">{% trans 'Link' %}</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="link" name="link" placeholder="link">
+    </div>
+  </div>
+   <div class="row">
+    <div class="col-25">
+      <label for="link">{% trans 'Email' %}</label>
+    </div>
+    <div class="col-75">
+      <input type="email" id="e-mail" name="e-mail" placeholder="Email" >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="subject">{% trans 'Açıklama' %}</label>
+    </div>
+    <div class="col-75">
+      <textarea id="explonation" name="explonation" placeholder="Açıklama" style="height:200px"></textarea>
+    </div>
+  </div>
 
-        <div class="col-md-6 mb-3">
-          <label >Resim</label>
-          <input type="file" name="photo" id="photo"  >
-        </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="subject">{% trans 'Resim' %}</label>
+    </div>
+    <div class="col-75">
+    <input type="file" id="photo" name="photo">
+    </div>
+  </div>
 
-        <div class="col-md-6 mb-3">
-        <button class="btn btn-primary" type="submit">Kaydet</button>
-        </div>
-      </div>
-    </form>
-    
-    <hr>
+  <div class="row">
+    <input type="submit" value="Submit">
+  </div>
+  </form>
+</div>
 
+<hr>
+<table>
+  <tr>
+    <th scope="row">{% trans 'Kode' %}: {{savecode}}</th>
+  </tr>
+</table>
 
-</center>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
+
+<script type="text/jaavscript">
+    $(document).on('submit', 'new_form', function(e)){
+        e.preventDefault();
+
+        s.ajax({
+            type: 'POST',
+            url: '/new_form',
+            data: {
+                baslik: $('#baslik').val(),
+                link: $('#link').val(),
+                e-mail: $('#e-mail').val(),
+                aciklama: $('#aciklama').val(),
+                resim: $('#resim').val(),
+            },
+            sucess: function(response){
+                if (response.result){
+                    sweetAlert("İşlem Başarılı", response.message, "success");
+                }
+                else {
+                    sweetAlert("Hata!", response.message, "error");
+                }
+
+            },
+            
+        });
+    }
+</script>
+
 </html>

@@ -10,35 +10,33 @@ import secrets
 # Create your views here.
 
 
-def index(request):
-    return render(request,'index.html')
+    
+def add(request):
+    if request.method == "GET":
+        
+        return render(request,"Add.html")
+    else:
+        title = request.POST.get("title")
+        explonation = request.POST.get("explonation")
+        link = request.POST.get("link")
+        email = request.POST.get("email")
+        photo = request.POST.get("photo")
 
-def aform(request):
-    
-    return render(request,'Add.html')
-    
-def addform(request):
-    title = request.POST.get("title")
-    explonation = request.POST.get("explonation")
-    link = request.POST.get("link")
-    email = request.POST.get("email")
-    photo = request.POST.get("photo")
-
-    codes = form.objects.filter(save_code__isnull=False)
-    savecode = ""
-    while savecode == "":
-        savecode = secrets.token_hex(nbytes=32)
-        for code in codes:
-            if savecode == code.getsavecode:
-                savecode = ""
-            
-    newForm = form(save_code = savecode, title = title, explonation = explonation, link = link, email = email, photo = photo )
-    newForm.save()
-    
-    context={
-            "savecode":savecode,
-        }
-    return render(request,"AddMore.html",context)
+        codes = form.objects.filter(save_code__isnull=False)
+        savecode = ""
+        while savecode == "":
+            savecode = secrets.token_hex(nbytes=32)
+            for code in codes:
+                if savecode == code.getsavecode:
+                    savecode = ""
+                
+        newForm = form(save_code = savecode, title = title, explonation = explonation, link = link, email = email, photo = photo )
+        newForm.save()
+        
+        context={
+                "savecode":savecode,
+            }
+        return render(request,"Add.html",context)
 
 def search(request):
     
