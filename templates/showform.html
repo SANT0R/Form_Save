@@ -49,11 +49,13 @@ table, th, td {
 </head>
 <body>
   
-  <div id="menu" >
-    <ul>
-        <li><a href="/">ANASAYFA</a></li>
-    </ul>
-  </div>
+  <form  action="/" method="GET">
+  {% csrf_token %}
+  
+    <div style="margin-left:400px; padding:25px;">
+      <button  type="submit">ANASAYFA</button>
+    </div>
+  </form>
 
     <div class="container">
       <form id="menu1" action="/showform/" method="POST">
@@ -73,7 +75,7 @@ table, th, td {
     <div class="detail">
     {% if first %}
 
-    {% elif didntfind %}
+    {% elif theForm == none %}
         Kayıt bulunamadı
     {% else %}
 

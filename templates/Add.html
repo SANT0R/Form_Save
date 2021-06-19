@@ -64,11 +64,25 @@ input[type=submit]:hover {
   }
 }
 </style>
+
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery-ui.js"></script>
+<script> type="text/jaavscript">
+  $(document).ready(function(){
+    $(function(){
+      $(".addform").click(function(){
+        var title = $("input[name = title]").val();
+      })
+    } )
+  }
+  
+  )
+</script>
 </head>
 <body>
 
-<form action="/showform/" method="POST">
-  {% csrf_token %}<div id="menu" >
+<form  action="/showform/" method="POST">
+  {% csrf_token %}
   <div>  
     {% load i18n %}
     <button class="btn btn-primary" type="submit">{% trans 'RAPOR' %}</button>
@@ -76,7 +90,7 @@ input[type=submit]:hover {
 </form>
   
 <div class="container">
-  <form action="/" method="POST">
+  <form class="addForm" action="/" method="POST">
       {% csrf_token %}
   <div class="row">
     <div class="col-25">
@@ -129,38 +143,11 @@ input[type=submit]:hover {
 <hr>
 <table>
   <tr>
-    <th scope="row">{% trans 'Kode' %}: {{savecode}}</th>
+    <th scope="row">{% trans 'Kod' %} : {{savecode}}</th>
   </tr>
 </table>
 
 </body>
 
-<script type="text/jaavscript">
-    $(document).on('submit', 'new_form', function(e)){
-        e.preventDefault();
-
-        s.ajax({
-            type: 'POST',
-            url: '/new_form',
-            data: {
-                baslik: $('#baslik').val(),
-                link: $('#link').val(),
-                e-mail: $('#e-mail').val(),
-                aciklama: $('#aciklama').val(),
-                resim: $('#resim').val(),
-            },
-            sucess: function(response){
-                if (response.result){
-                    sweetAlert("İşlem Başarılı", response.message, "success");
-                }
-                else {
-                    sweetAlert("Hata!", response.message, "error");
-                }
-
-            },
-            
-        });
-    }
-</script>
 
 </html>
