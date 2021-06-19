@@ -38,23 +38,30 @@ def add(request):
             }
         return render(request,"Add.html",context)
 
-def search(request):
-    
-    return render(request,'search.html')
 
 def showform(request):
 
     code = request.POST.get("code")
-    theForm = get_object_or_404(form, save_code = code)
-    if theForm == None:
-        context={}
+    if code == None:
+        context={"first":True,}
+        return render(request,'showform.html',context)
     else:
-        context={
-                "theForm":theForm,
-                "title":theForm.title,
-                "explonation":theForm.explonation,
-                "link":theForm.link,
-                "email":theForm.email,
-                "photo":theForm.photo,
-            }
-    return render(request,'showform.html',context)
+        
+        codes = form.objects.filter(save_code__isnull=False)
+        for code1 in codes:
+            if code1.getsavecode == code:
+
+                theForm = form.objects.get(save_code = code)
+                
+                context={
+                        "theForm":theForm,
+                        "title":theForm.title,
+                        "explonation":theForm.explonation,
+                        "link":theForm.link,
+                        "email":theForm.email,
+                        "photo":theForm.photo,
+                    }
+                return render(request,'showform.html',context)
+            
+            context={"didntfind":True,}
+            return render(request,'showform.html',context)
