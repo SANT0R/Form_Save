@@ -68,7 +68,7 @@ input[type=submit]:hover {
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="jquery-ui.js"></script>
-<script> type="text/jaavscript">
+<script type="text/javascript">
   $(document).ready(function(){
     $(function(){
       $(".addform").submit(function(e){
@@ -82,8 +82,9 @@ input[type=submit]:hover {
           type:'json',
           url:form_action,
           data:form_serialize,
-          success:function(savecode){
+          success:function(data){
             $(".savecode").html(savecode);
+            alert(data[savecode])
           }
 
         })
@@ -159,11 +160,13 @@ input[type=submit]:hover {
 </div>
 
 <hr>
-<table class="savecode">
-  <tr>
-    <th class="savecode" scope="row">Code : {{savecode}}</th>
-  </tr>
-</table>
+<div class="savecode">
+</div>
+  <table >
+    <tr>
+      <th  scope="row">Code : {{savecode}}</th>
+    </tr>
+  </table>
 <script>
 
   const langEl = document.querySelector('.langWrap');

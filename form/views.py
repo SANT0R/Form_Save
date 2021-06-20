@@ -36,10 +36,10 @@ def add(request):
                 "savecode":savecode,
         }
         
-        if request.is_ajax():
-            return JsonResponse(context)
+        #if request.is_ajax():
+        return JsonResponse(context)
         
-        return render(request,"Add.html",context)
+        #return render(request,"Add.html",context)
         
     else:
         return render(request,"Add.html")
