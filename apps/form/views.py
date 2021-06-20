@@ -7,15 +7,14 @@ from django.contrib.auth.decorators import * #görünüm gizlenme
 from django.http import * # Http komutları
 from .models import form
 import secrets 
+from django.template.loader import render_to_string
 # Create your views here.
 
 
     
 def add(request):
-    if request.method == "GET":
+    if request.method == "POST":
         
-        return render(request,"Add.html")
-    else:
         title = request.POST.get("title")
         explonation = request.POST.get("explonation")
         link = request.POST.get("link")
@@ -35,8 +34,20 @@ def add(request):
         
         context={
                 "savecode":savecode,
-            }
+        }
+        """
+        html_form = render_to_string('Add.html',
+        context,
+        request=request,
+        )
+        """
+        if request.is_ajax():
+            return JsonResponse(context)
+        
         return render(request,"Add.html",context)
+        
+    else:
+        return render(request,"Add.html")
 
 
 def showform(request):
@@ -63,5 +74,5 @@ def showform(request):
                     }
                 return render(request,'showform.html',context)
             
-            context={"didntfind":True,}
-            return render(request,'showform.html',context)
+        context={"didntfind":True,}
+        return render(request,'showform.html',context)

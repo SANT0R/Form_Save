@@ -47,53 +47,49 @@ table, th, td {
 
 </style>
 </head>
+
+
 <body>
-  
-  <form  action="/" method="GET">
-  {% csrf_token %}
-  
-    <div style="margin-left:400px; padding:25px;">
-      <button  type="submit">ANASAYFA</button>
-    </div>
-  </form>
+<form  action="/" method="GET">
+{% csrf_token %}
+</form>
 
-    <div class="container">
-      <form id="menu1" action="/showform/" method="POST">
-      {% csrf_token %}
+  <div class="container">
+    <form id="menu1" action="/showform/" method="POST">
+    {% csrf_token %}
+      <div>
+        <label for="validationServer01">Code</label>
+        <input type="text"   name="code" id="code" required="required" placeholder="Kodu yazın">
+      </div>
       
-        <div>
-          <label for="validationServer01">Kod</label>
-          <input type="text"   name="code" id="code" required="required" placeholder="Kodu yazın">
-        </div>
-        
-        <div style="margin-left:400px; padding:25px;">
-        <button  type="submit">Göster</button>
-        </div>
-    </form>
-    </div>
+      <div style="margin-left:400px; padding:25px;">
+      <button  type="submit">Show</button>
+      </div>
+  </form>
+  </div>
 
-    <div class="detail">
-    {% if first %}
+  <div class="detail">
+  {% if first %}
 
-    {% elif theForm == none %}
-        Kayıt bulunamadı
-    {% else %}
+  {% elif theForm == none %}
+     No Results Found For This!
+  {% else %}
 
 <table>
-  <tr>
-    <th>Başlık</th>
-    <th>Link</th>
-    <th>E-Posta</th>
-    <th>Açıklama</th>
-    <th>Resim</th>  
-  </tr>
-  <tr>
-    <td>{{title}}</td>
-    <td>{{link}}</td>    
-    <td>{{email}}</td>
-    <td>{{explonation}}</td>    
-    <td>{{photo}}</td>
-  </tr>
+<tr>
+  <th>Title</th>
+  <th>Link</th>
+  <th>E-mail</th>
+  <th>Description</th>
+  <th>Picture</th>  
+</tr>
+<tr>
+  <td>{{title}}</td>
+  <td>{{link}}</td>    
+  <td>{{email}}</td>
+  <td>{{explonation}}</td>    
+  <td>{{photo}}</td>
+</tr>
 </table>
 {% endif %}
 </div>

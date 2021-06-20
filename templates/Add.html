@@ -70,8 +70,22 @@ input[type=submit]:hover {
 <script> type="text/jaavscript">
   $(document).ready(function(){
     $(function(){
-      $(".addform").click(function(){
-        var title = $("input[name = title]").val();
+      $(".addform").submit(function(e){
+        e.preventDefault();
+        var form = $(this);
+        var form_action = form_action('action');
+        var form_serialize = form_serialize();
+        
+        $.ajax({
+          method:"POST",
+          type:'json',
+          url:form_action,
+          data:form_serialize,
+          success:function(savecode){
+            $(".savecode").html(savecode);
+          }
+
+        })
       })
     } )
   }
@@ -79,13 +93,16 @@ input[type=submit]:hover {
   )
 </script>
 </head>
-<body>
 
+<body>
+<div class="langWrap">
+    <a href="#" language='turkish' class="active">TR</a>
+    <a href="#" language='english'>En</a>
+  </div>
 <form  action="/showform/" method="POST">
   {% csrf_token %}
   <div>  
-    {% load i18n %}
-    <button class="btn btn-primary" type="submit">{% trans 'RAPOR' %}</button>
+    <button class="btn btn-primary" type="submit">Query the code</button>
   </div>
 </form>
   
@@ -94,40 +111,40 @@ input[type=submit]:hover {
       {% csrf_token %}
   <div class="row">
     <div class="col-25">
-      <label for="baslik">{% trans 'Başlık' %}</label>
+      <label for="baslik">Title</label>
     </div>
     <div class="col-75">
-      <input type="text" id="title" name="title" placeholder="Başlık" required>
+      <textarea type="text" id="title" name="title" class="title" placeholder="Başlık" required></textarea>
     </div>
   </div>
   <div class="row">
     <div class="col-25">
-      <label for="link">{% trans 'Link' %}</label>
+      <label for="link">Link</label>
     </div>
     <div class="col-75">
-      <input type="text" id="link" name="link" placeholder="link">
+      <textarea type="text" id="link" name="link"  class="link" placeholder="link" required></textarea>
     </div>
   </div>
    <div class="row">
     <div class="col-25">
-      <label for="link">{% trans 'Email' %}</label>
+      <label for="link">Email</label>
     </div>
     <div class="col-75">
-      <input type="email" id="e-mail" name="e-mail" placeholder="Email" >
+      <textarea type="email" id="email" name="email" class="email" placeholder="Email" required></textarea>
     </div>
   </div>
   <div class="row">
     <div class="col-25">
-      <label for="subject">{% trans 'Açıklama' %}</label>
+      <label for="subject">Explonation}</label>
     </div>
     <div class="col-75">
-      <textarea id="explonation" name="explonation" placeholder="Açıklama" style="height:200px"></textarea>
+      <textarea id="explonation" name="explonation" class="explonation" placeholder="Açıklama" style="height:200px" required></textarea>
     </div>
   </div>
 
   <div class="row">
     <div class="col-25">
-      <label for="subject">{% trans 'Resim' %}</label>
+      <label for="subject">Picture</label>
     </div>
     <div class="col-75">
     <input type="file" id="photo" name="photo">
@@ -141,11 +158,57 @@ input[type=submit]:hover {
 </div>
 
 <hr>
-<table>
+<table class="savecode">
   <tr>
-    <th scope="row">{% trans 'Kod' %} : {{savecode}}</th>
+    <th class="savecode" scope="row">Code : {{savecode}}</th>
   </tr>
 </table>
+<script>
+
+  const langEl = document.querySelector('.langWrap');
+  const link = document.querySelectorAll('a');
+  const titleEl = document.querySelector('.title');
+  const linkEl = document.querySelector('.link');
+  const emailEl = document.querySelector('.email');
+  const descriptiongEl = document.querySelector('.explonation');
+  const photoEl = document.querySelector('.photo');
+
+  link.forEach(el => {
+    el.addEventListener('click', () => {
+      langEl.querySelector('.active').classList.remove('active');
+      el.classList.add('active');
+
+      const attr = el.getAttribute('language');
+      titleEl.textContent = data[attr].title;
+      linkEl.textContent = data[attr].link;
+      emailEl.textContent = data[attr].email;
+      descriptiongEl.textContent = data[attr].explonation;
+      photoEl.textContent = data[attr].photo;
+
+    });
+    console.log(titleEl.textContent);
+  });
+
+  var data = {
+    "turkish": {
+      "title":"Başlık",
+      "link":"Link",
+      "email":"Email",
+      "explonation":"Açıklama",
+      "photo":"Resim",
+
+    },
+    "english": {
+      "title":"Title",
+      "link":"Link",
+      "email":"Email",
+      "explonation":"Description",
+      "photo":"Picture",
+    }
+  }
+
+</script>
+</body>
 
 </body>
 
