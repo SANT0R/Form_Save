@@ -35,12 +35,7 @@ def add(request):
         context={
                 "savecode":savecode,
         }
-        """
-        html_form = render_to_string('Add.html',
-        context,
-        request=request,
-        )
-        """
+        
         if request.is_ajax():
             return JsonResponse(context)
         
